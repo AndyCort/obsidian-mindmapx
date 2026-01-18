@@ -1,6 +1,6 @@
 {
     "name": "obsidian-mindmapx",
-    "version": "1.0.1.1",
+    "version": "1.0.2",
     "description": "Obsidian思维导图插件 - 实时预览与双向同步",
     "main": "main.js",
     "scripts": {
