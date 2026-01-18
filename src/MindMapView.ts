@@ -81,7 +81,9 @@ export class MindMapView extends ItemView {
                 e.stopPropagation();
                 e.stopImmediatePropagation();
 
-                const zoomFactor = e.deltaY < 0 ? 1.3 : 0.7;
+                // 基于滚轮偏移量计算连续缩放因子
+                const sensitivity = 0.01;
+                const zoomFactor = Math.exp(-e.deltaY * sensitivity);
                 this.handleZoom(zoomFactor);
             }
         };

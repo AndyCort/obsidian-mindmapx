@@ -44139,7 +44139,8 @@ var MindMapView = class extends import_obsidian.ItemView {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
-        const zoomFactor = e.deltaY < 0 ? 1.3 : 0.7;
+        const sensitivity = 0.01;
+        const zoomFactor = Math.exp(-e.deltaY * sensitivity);
         this.handleZoom(zoomFactor);
       }
     };
