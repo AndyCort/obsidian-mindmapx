@@ -1,7 +1,7 @@
 {
   "id": "obsidian-mindmapx",
   "name": "MindMapX",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "minAppVersion": "1.0.0",
   "description": "根据Markdown文件实时生成交互式思维导图，支持双向同步编辑",
   "author": "Your Name",
