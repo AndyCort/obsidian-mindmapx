@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      # 只有这些文件变化时才触发 release
-      - 'src/**'
-      - 'manifest.json'
-      - 'styles.css'
 
 jobs:
   build:
