@@ -1,0 +1,185 @@
+/* MindMapX 插件样式 */
+
+.mindmap-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--background-primary);
+  overflow: hidden;
+}
+
+/* 工具栏 */
+.mindmap-toolbar {
+  display: flex;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--background-secondary);
+  border-bottom: 1px solid var(--background-modifier-border);
+  flex-shrink: 0;
+}
+
+.mindmap-btn {
+  padding: 4px 12px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  background: var(--interactive-normal);
+  color: var(--text-normal);
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.15s ease;
+}
+
+.mindmap-btn:hover {
+  background: var(--interactive-hover);
+  border-color: var(--interactive-accent);
+}
+
+.mindmap-btn:active {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+/* SVG 容器 */
+.mindmap-svg-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+#mindmap-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Markmap 节点样式覆盖 */
+.markmap-node {
+  cursor: pointer;
+}
+
+.markmap-node text {
+  fill: var(--text-normal);
+  font-family: var(--font-text);
+  transition: fill 0.15s ease;
+}
+
+.markmap-node:hover text {
+  fill: var(--interactive-accent);
+}
+
+.markmap-node circle {
+  fill: var(--interactive-accent);
+  stroke: var(--interactive-accent-hover);
+  stroke-width: 1.5px;
+}
+
+.markmap-link {
+  fill: none;
+  stroke: var(--background-modifier-border);
+  stroke-width: 2px;
+}
+
+/* 节点编辑输入框 */
+.mindmap-node-editor {
+  position: absolute;
+  z-index: 1000;
+  padding: 2px 6px;
+  border: 2px solid var(--interactive-accent);
+  border-radius: 4px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-family: var(--font-text);
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  min-width: 100px;
+}
+
+.mindmap-node-editor:focus {
+  border-color: var(--interactive-accent-hover);
+}
+
+/* 深色主题适配 */
+.theme-dark .mindmap-container {
+  --markmap-color-0: #6bb8ff;
+  --markmap-color-1: #66d9ef;
+  --markmap-color-2: #a6e22e;
+  --markmap-color-3: #f92672;
+  --markmap-color-4: #fd971f;
+  --markmap-color-5: #ae81ff;
+}
+
+/* 浅色主题适配 */
+.theme-light .mindmap-container {
+  --markmap-color-0: #0366d6;
+  --markmap-color-1: #1b9e77;
+  --markmap-color-2: #7570b3;
+  --markmap-color-3: #d95f02;
+  --markmap-color-4: #e7298a;
+  --markmap-color-5: #66a61e;
+}
+
+/* 根节点样式 */
+.markmap-node[data-depth="0"] text {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* 一级节点 */
+.markmap-node[data-depth="1"] text {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* 其他层级节点 */
+.markmap-node[data-depth="2"] text,
+.markmap-node[data-depth="3"] text,
+.markmap-node[data-depth="4"] text {
+  font-size: 13px;
+}
+
+/* 折叠按钮 */
+.markmap-node circle.markmap-fold {
+  fill: var(--background-secondary);
+  stroke: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.markmap-node circle.markmap-fold:hover {
+  fill: var(--interactive-accent);
+  stroke: var(--interactive-accent);
+}
+
+/* 加载状态 */
+.mindmap-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* 空状态 */
+.mindmap-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--text-muted);
+  text-align: center;
+  gap: 8px;
+}
+
+.mindmap-empty-icon {
+  font-size: 48px;
+  opacity: 0.5;
+}
+
+.mindmap-empty-text {
+  font-size: 14px;
+}
