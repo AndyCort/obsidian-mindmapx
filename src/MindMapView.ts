@@ -74,23 +74,17 @@ export class MindMapView extends ItemView {
         this.svgEl.setAttribute('id', 'mindmap-svg');
         this.containerEl_inner.appendChild(this.svgEl);
 
-        // Command/Ctrl + 滚轮缩放 (在捕获阶段处理，确保优先于 Markmap)
-        // Mac 上 metaKey 是 Command 键，Windows 上 ctrlKey 是 Ctrl 键
+        // Command/Ctrl + 滚轮缩放
         const handleWheel = (e: WheelEvent) => {
-            // Mac: metaKey (Command), Windows/Linux: ctrlKey
             if (e.metaKey || e.ctrlKey) {
                 e.preventDefault();
                 e.stopPropagation();
                 e.stopImmediatePropagation();
-                if (e.deltaY < 0) {
-                    this.zoomIn();
-                } else {
-                    this.zoomOut();
-                }
+
+                const zoomFactor = e.deltaY < 0 ? 1.3 : 0.7;
+                this.handleZoom(zoomFactor);
             }
         };
-        // 在 SVG 和容器上都添加监听，使用捕获阶段
-        this.svgEl.addEventListener('wheel', handleWheel, { passive: false, capture: true });
         this.containerEl_inner.addEventListener('wheel', handleWheel, { passive: false, capture: true });
 
         // 监听文件变化
@@ -286,16 +280,25 @@ export class MindMapView extends ItemView {
         }
     }
 
+    private currentScale = 1;
+
+    handleZoom(factor: number) {
+        if (!this.markmap || !this.svgEl) return;
+
+        this.currentScale *= factor;
+        // 限制缩放范围
+        this.currentScale = Math.max(0.1, Math.min(5, this.currentScale));
+
+        // 使用 markmap 的 rescale 方法
+        this.markmap.rescale(factor);
+    }
+
     zoomIn() {
-        if (this.markmap) {
-            this.markmap.rescale(1.25);
-        }
+        this.handleZoom(1.3);
     }
 
     zoomOut() {
-        if (this.markmap) {
-            this.markmap.rescale(0.8);
-        }
+        this.handleZoom(0.7);
     }
 
     fit() {

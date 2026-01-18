@@ -44104,6 +44104,7 @@ var MindMapView = class extends import_obsidian.ItemView {
     this.currentRoot = null;
     // 用于存储节点与行号的映射
     this.nodeLineMap = /* @__PURE__ */ new Map();
+    this.currentScale = 1;
     this.plugin = plugin2;
     this.transformer = new Transformer();
   }
@@ -44138,14 +44139,10 @@ var MindMapView = class extends import_obsidian.ItemView {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
-        if (e.deltaY < 0) {
-          this.zoomIn();
-        } else {
-          this.zoomOut();
-        }
+        const zoomFactor = e.deltaY < 0 ? 1.3 : 0.7;
+        this.handleZoom(zoomFactor);
       }
     };
-    this.svgEl.addEventListener("wheel", handleWheel, { passive: false, capture: true });
     this.containerEl_inner.addEventListener("wheel", handleWheel, { passive: false, capture: true });
     this.registerEvent(
       this.app.vault.on("modify", (0, import_obsidian.debounce)((file) => {
@@ -44288,15 +44285,18 @@ var MindMapView = class extends import_obsidian.ItemView {
       await this.app.vault.modify(this.currentFile, newContent);
     }
   }
+  handleZoom(factor) {
+    if (!this.markmap || !this.svgEl)
+      return;
+    this.currentScale *= factor;
+    this.currentScale = Math.max(0.1, Math.min(5, this.currentScale));
+    this.markmap.rescale(factor);
+  }
   zoomIn() {
-    if (this.markmap) {
-      this.markmap.rescale(1.25);
-    }
+    this.handleZoom(1.3);
   }
   zoomOut() {
-    if (this.markmap) {
-      this.markmap.rescale(0.8);
-    }
+    this.handleZoom(0.7);
   }
   fit() {
     if (this.markmap) {
